@@ -135,7 +135,7 @@ public class EmpresaController {
 
 
 
-    @GetMapping("/dto/{id}")
+    @GetMapping("/dto/{rut}")
     public ResponseEntity<EmpresaDTO> buscarEmpresaDTO(@PathVariable String rut){
         try{
             return ResponseEntity.ok(es.buscarEmpresaDTO(rut));

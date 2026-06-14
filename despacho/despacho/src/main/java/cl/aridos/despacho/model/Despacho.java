@@ -29,7 +29,7 @@ public class Despacho {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idDespacho", nullable= false)
+    @Column(name = "idDespacho")
     private Integer idDespacho;
 
     @Column(name = "rutEmpresa", nullable= false)

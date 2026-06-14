@@ -8,6 +8,6 @@ import cl.aridos.despacho.dto.EmpresaDTO;
 
 @FeignClient(name="empresa", url= "http://localhost:8082")
 public interface EmpresaClient {
-    @GetMapping("aridos/empresas/dto/{id}")
-    EmpresaDTO obtenerEmpresaPorRut(@PathVariable("id") String rut);
+    @GetMapping("/aridos/empresas/dto/{rut}")
+    EmpresaDTO obtenerEmpresaPorRut(@PathVariable("rut") String rut);
 }

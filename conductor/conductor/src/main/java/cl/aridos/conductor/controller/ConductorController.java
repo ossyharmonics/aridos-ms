@@ -41,14 +41,6 @@ public class ConductorController {
         }
     }
 
-    /*// Usado por el microservicio CAMION (FK idConductor)
-    @GetMapping("/idConductor/{idConductor}")
-    public ResponseEntity<Conductor> obtenerPorIdConductor(@PathVariable Long idConductor) {
-        return conductorService.buscarPorIdConductor(idConductor)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }*/
-
     @PostMapping
     public ResponseEntity<?> crearConductor(@RequestBody Conductor conductor) {
         Conductor c = cs.guardarConductor(conductor);
@@ -78,20 +70,13 @@ public class ConductorController {
         }
     }
 
-    /*// Endpoint de composicion: trae el camion del conductor via microservicio CAMION
-    @GetMapping("/{rutPersona}/camion")
-    public ResponseEntity<CamionDTO> camionDelConductor(@PathVariable String rutPersona) {
-        CamionDTO dto = conductorService.obtenerCamionDelConductor(rutPersona);
-        return dto == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(dto);
-    }*/
-
 
     @GetMapping("/dto/{id}")
-    public ResponseEntity<ConductorDTO> buscarConductorDTO(@PathVariable Integer id){
+    public ResponseEntity<?> buscarConductorDTO(@PathVariable Integer id){
         try{
             return ResponseEntity.ok(cs.buscarConductorDTO(id));
         }catch(Exception e){
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ERROR 404\nEl id conductor no existe.");
         }
     }
 }

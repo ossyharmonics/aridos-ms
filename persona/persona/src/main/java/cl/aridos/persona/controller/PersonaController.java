@@ -71,7 +71,7 @@ public class PersonaController {
         }
     }
 
-    @GetMapping("/dto/{id}")
+    @GetMapping("/dto/{rut}")
     public ResponseEntity<PersonaDTO> buscarPersonaDTO(@PathVariable String rut){
         try{
             return ResponseEntity.ok(ps.buscarPersonaDTO(rut));

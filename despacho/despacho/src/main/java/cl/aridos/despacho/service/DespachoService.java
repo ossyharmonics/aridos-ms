@@ -24,10 +24,15 @@ import java.util.List;
 public class DespachoService {
     @Autowired
     private DespachoRepository dr;
-    private CamionClient conductorClient;
+    @Autowired
+    private CamionClient camionClient;
+    @Autowired
     private DireccionClient direccionClient;
+    @Autowired
     private EmpresaClient empresaClient;
+    @Autowired
     private PagoClient pagoClient;
+    @Autowired
     private PersonaClient personaClient;
 
     public List<Despacho> listar() {
@@ -41,12 +46,12 @@ public class DespachoService {
 
     public Despacho guardarDespacho(Despacho despacho) {
 
-        CamionDTO camionDTO = conductorClient.obtenerCamionPorPatente(despacho.getPatente());
+        CamionDTO camionDTO = camionClient.obtenerCamionPorPatente(despacho.getPatente());
         if (camionDTO == null){
             throw new RuntimeException("Patente no encontrada.");
         }
 
-        DireccionDTO direccionDTO = direccionClient.obtenerDireccionPorId(despacho.getIdDespacho());
+        DireccionDTO direccionDTO = direccionClient.obtenerDireccionPorId(despacho.getIdDireccion());
         if (direccionDTO == null){
             throw new RuntimeException("Dirección no encontrada.");
         }

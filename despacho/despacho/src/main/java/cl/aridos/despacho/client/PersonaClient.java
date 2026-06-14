@@ -9,7 +9,7 @@ import cl.aridos.despacho.dto.PersonaDTO;
 @FeignClient(name="persona", url= "http://localhost:8080")
 public interface PersonaClient {
     
-    @GetMapping("/aridos/personas/dto/{id}")
-    PersonaDTO buscarPersonaPorRut(@PathVariable("id")String rut);
+    @GetMapping("/aridos/personas/dto/{rut}")
+    PersonaDTO buscarPersonaPorRut(@PathVariable("rut")String rut);
 
 }

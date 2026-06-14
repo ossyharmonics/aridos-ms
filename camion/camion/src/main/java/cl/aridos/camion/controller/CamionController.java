@@ -79,7 +79,7 @@ public class CamionController {
 
 
 
-    @GetMapping("/dto/{id}")
+    @GetMapping("/dto/{patente}")
     public ResponseEntity<CamionDTO> buscarCamionDTO(@PathVariable String patente){
         try{
             return ResponseEntity.ok(cs.buscarCamionDTO(patente));

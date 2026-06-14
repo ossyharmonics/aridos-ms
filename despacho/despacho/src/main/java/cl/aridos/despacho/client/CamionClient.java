@@ -9,6 +9,6 @@ import cl.aridos.despacho.dto.CamionDTO;
 @FeignClient(name = "camion", url= "http://localhost:8086")
 public interface CamionClient {
 
-    @GetMapping("aridos/camiones/dto/{id}")
-    CamionDTO obtenerCamionPorPatente(@PathVariable("id") String patente);
+    @GetMapping("/aridos/camiones/dto/{patente}")
+    CamionDTO obtenerCamionPorPatente(@PathVariable("patente") String patente);
 }

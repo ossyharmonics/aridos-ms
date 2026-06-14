@@ -35,13 +35,6 @@ public class ConductorService {
         return cr.save(conductor);
     }
 
-    /*public Conductor actualizar(Integer id, Conductor conductor) {
-        Conductor c = buscarIdConductor(id);
-        if(c != null){
-
-        }
-    }*/
-
     public boolean eliminarConductor(Integer id) {
         Conductor c = buscarPorIdConductor(id);
         if (c!= null){
@@ -49,30 +42,12 @@ public class ConductorService {
         }
         return false;
     }
-    
 
-    /**
-     * Obtiene el camion asignado al conductor consultando el microservicio CAMION.
-     
-    public CamionDTO obtenerCamionDelConductor(String rutPersona) {
-        Conductor conductor = conductorRepository.findById(rutPersona)
-                .orElseThrow(() -> new IllegalArgumentException("Conductor no encontrado: " + rutPersona));
-        if (conductor.getPatente() == null) {
-            return null;
-        }
-        return camionClient.obtenerPorPatente(conductor.getPatente());
-    }*/
-
-
-
-
-
-
-        public ConductorDTO buscarConductorDTO(Integer id){
-            Conductor c = buscarPorIdConductor(id);
-            ConductorDTO dto = new ConductorDTO();
-            dto.setIdConductor(c.getIdConductor());
-            return dto;
-        }
+    public ConductorDTO buscarConductorDTO(Integer id){
+        Conductor c = buscarPorIdConductor(id);
+        ConductorDTO dto = new ConductorDTO();
+        dto.setIdConductor(c.getIdConductor());
+        return dto;
+    }
 }
 
