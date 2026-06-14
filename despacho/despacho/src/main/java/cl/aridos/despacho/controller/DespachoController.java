@@ -69,10 +69,4 @@ public class DespachoController {
         }
     }
 
-    /*// Endpoint de composicion: trae el camion del despacho via microservicio CAMION
-    @GetMapping("/{idDespacho}/camion")
-    public ResponseEntity<CamionDTO> camionDelDespacho(@PathVariable Long idDespacho) {
-        CamionDTO dto = despachoService.obtenerCamionDelDespacho(idDespacho);
-        return dto == null ? ResponseEntity.noContent().build() : ResponseEntity.ok(dto);
-    }*/
 }

@@ -80,15 +80,5 @@ public class DespachoService {
         return false;
     }
 
-    /**
-     * Obtiene el camion del despacho consultando el microservicio CAMION.
-     
-    public CamionDTO obtenerCamionDelDespacho(Long idDespacho) {
-        Despacho despacho = despachoRepository.findById(idDespacho)
-                .orElseThrow(() -> new IllegalArgumentException("Despacho no encontrado: " + idDespacho));
-        if (despacho.getPatente() == null) {
-            return null;
-        }
-        return camionClient.obtenerPorPatente(despacho.getPatente());
-    }*/
+    
 }

@@ -20,7 +20,8 @@ public class PersonaService {
         return pr.findAll();
     }
     public Persona buscarPorRut(String rut){
-        return pr.findByRut(rut).get();
+        return pr.findByRut(rut)
+                .orElseThrow(() -> new RuntimeException("Rut no encontrado."));
     }
     public Persona guardarPersona(Persona persona){
         return pr.save(persona);

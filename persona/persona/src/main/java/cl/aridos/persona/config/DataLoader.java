@@ -13,6 +13,10 @@ public class DataLoader {
     @Bean
     CommandLineRunner initData(PersonaRepository persoRepo){
         return args -> {
+            if (persoRepo.count() >0){
+                System.out.println("La base de datos ya tiene registros");
+            
+            }else{
 
             Persona p1 = new Persona("14138994-7", "Victor", null, "Argandoña", "Argandoña");
             Persona p2 = new Persona("14124173-7", "Nicolas", null, "Rojas", "Castillo");
@@ -26,8 +30,8 @@ public class DataLoader {
 
             System.out.println("Datos cargados correctamente.");
 
+            };
         };
-
 
     }
 }
