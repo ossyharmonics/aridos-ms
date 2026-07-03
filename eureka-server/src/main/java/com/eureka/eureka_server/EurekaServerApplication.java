@@ -15,6 +15,8 @@ public class EurekaServerApplication {
 		app.setDefaultProperties(Collections.singletonMap("server.port", "8761"));
         System.setProperty("eureka.client.register-with-eureka", "false");
 		System.setProperty("eureka.client.fetch-registry","false");
+
+		app.run(args);
 	}
 
 }
