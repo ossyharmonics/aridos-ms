@@ -1,3 +1,44 @@
+server:
+  port: 8080
+
 spring:
   application:
     name: gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: persona-service
+              uri: http://localhost:8081
+              predicates:
+                - Path=/aridos/personas/**
+            - id: empresa-service
+              uri: http://localhost:8083
+              predicates:
+                - Path=/aridos/empresas/**
+            - id: camion-service
+              uri: http://localhost:8087
+              predicates:
+                - Path=/aridos/camiones/**
+            - id: conductor-service
+              uri: http://localhost:8086
+              predicates:
+                - Path=/aridos/conductores/**
+            - id: direccion-service
+              uri: http://localhost:8084
+              predicates:
+                - Path=/aridos/direcciones/**
+            - id: pago-service
+              uri: http://localhost:8082
+              predicates:
+                - Path=/aridos/pagos/**
+            - id: despacho-service
+              uri: http://localhost:8085
+              predicates:
+                - Path=/aridos/despachos/**
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/

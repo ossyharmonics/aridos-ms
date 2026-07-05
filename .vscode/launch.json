@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "GatewayApplication",
+      "request": "launch",
+      "mainClass": "com.gateway.gateway.GatewayApplication",
+      "projectName": "gateway",
+      "cwd": "${workspaceFolder}/gateway"
+    },
+    {
+      "type": "java",
+      "name": "EurekaServerApplication",
+      "request": "launch",
+      "mainClass": "com.eureka.eureka_server.EurekaServerApplication",
+      "projectName": "eureka-server",
+      "cwd": "${workspaceFolder}/eureka-server"
+    }
+  ]
+}
