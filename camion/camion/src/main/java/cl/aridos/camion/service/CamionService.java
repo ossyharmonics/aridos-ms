@@ -55,7 +55,8 @@ public class CamionService {
     public boolean eliminarCamion(String id) {
         Camion c = buscarPorPatenteCamion(id);
         if (c!= null){
-            return eliminarCamion(id);
+            cr.delete(c);
+            return true;
         }
         return false;
     }

@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import cl.aridos.pago.dto.PagoDTO;
 import cl.aridos.pago.model.Pago;
 import cl.aridos.pago.model.TipoPago;
@@ -27,11 +30,18 @@ public class PagoController {
         private PagoService ps;
 
     @GetMapping
+    @Operation(summary = "Listar pagos", description = "Lista todos los pagos registrados")
     public List<Pago> listarPagos(){
         return ps.listarPagos();
     } 
 
     @GetMapping("/{id}")
+    @Operation(summary = "Buscar pago por ID", description = "Busca un pago por su identificador unico")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pago encontrado"),
+        @ApiResponse(responseCode = "404", description = "Pago no encontrado"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<Pago> buscarIdPago(@PathVariable Integer id){
         try
         {
@@ -43,6 +53,7 @@ public class PagoController {
     }
 
     @PostMapping
+    @Operation(summary = "Crear pago", description = "Crea un nuevo pago en el sistema")
     public ResponseEntity<?> guardarPago(@RequestBody Pago pago){
         Pago p = ps.guardarPago(pago);
         if (p != null) {
@@ -56,10 +67,17 @@ public class PagoController {
 //  ***************************TIPO DE PAGO***************************
     
     @GetMapping("/tipo-pagos")
+    @Operation(summary = "Listar tipos de pago", description = "Lista todos los tipos de pago registrados")
     public List<TipoPago> listarTipoPagos(){
         return ps.listarTipoPagos();
     }
     @GetMapping("/tipo-pago/{id}")
+    @Operation(summary = "Buscar tipo de pago por ID", description = "Busca un tipo de pago por su identificador unico")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Tipo de pago encontrado"),
+        @ApiResponse(responseCode = "404", description = "Tipo de pago no encontrado"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<TipoPago> buscarIdTipoPago(@PathVariable Integer id){
         try
         {
@@ -70,6 +88,7 @@ public class PagoController {
         }
     }
     @PostMapping("/tipo-pagos/")
+    @Operation(summary = "Crear tipo de pago", description = "Crea un nuevo tipo de pago en el sistema")
     public ResponseEntity<?> crearTipoPago(@RequestBody TipoPago tipoPago){
         TipoPago tp = ps.guardarTipoPago(tipoPago);
         if (tp != null) {
@@ -79,6 +98,7 @@ public class PagoController {
         }
     }
     @PutMapping("/tipo-pagos/{id}")
+    @Operation(summary = "Actualizar tipo de pago", description = "Actualiza un tipo de pago existente por su ID")
     public ResponseEntity<?> actualizarTipoPago(@PathVariable Integer id, @RequestBody TipoPago tipoPago){
         TipoPago tp = ps.actualizarTipoPago(id, tipoPago);
         if (tp != null) {
@@ -88,6 +108,7 @@ public class PagoController {
         }
     }
     @DeleteMapping("/tipo-pagos/{id}")
+    @Operation(summary = "Eliminar tipo de pago", description = "Elimina un tipo de pago por su identificador unico")
     public ResponseEntity<?> eliminarTipoPago(@PathVariable Integer id){
         boolean eliminado = ps.eliminarTipoPago(id);
         if (eliminado) {
@@ -100,6 +121,12 @@ public class PagoController {
 
 
     @GetMapping("/dto/{id}")
+    @Operation(summary = "Buscar pago DTO por ID", description = "Busca un pago DTO por su identificador unico")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Pago DTO encontrado"),
+        @ApiResponse(responseCode = "404", description = "Pago DTO no encontrado"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<PagoDTO> buscarPagoDTO(@PathVariable Integer id){
         try{
             return ResponseEntity.ok(ps.buscarPagoDTO(id));

@@ -17,6 +17,7 @@ import jakarta.transaction.Transactional;
 public class PagoService {
     @Autowired
     private PagoRepository pr;
+    @Autowired
     private TipoPagoRepository tpr;
 
     public List<Pago> listarPagos(){
@@ -31,7 +32,8 @@ public class PagoService {
     public boolean eliminarPago(Integer id){
         Pago p = buscarPorIdPago(id);
         if (p!= null) {
-            return eliminarPago(id);
+            pr.delete(p);
+            return true;
         }
         return false;
     }
@@ -52,12 +54,13 @@ public class PagoService {
     public boolean eliminarTipoPago(Integer id){
         TipoPago tp = buscarPorIdTipoPago(id);
         if (tp!= null) {
-            return eliminarTipoPago(id);
+            tpr.delete(tp);
+            return true;
         }
         return false;
     }
     public TipoPago actualizarTipoPago(Integer idTipoPago, TipoPago tipoPago){
-        TipoPago tp = buscarPorIdTipoPago(idTipoPago);
+        TipoPago tp = tpr.findById(idTipoPago).orElse(null);
         if (tp!= null) {
             tp.setIdTipoPago(idTipoPago);
             tp.setNombreTipoPago(tipoPago.getNombreTipoPago());

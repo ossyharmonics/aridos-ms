@@ -38,7 +38,7 @@ public class DireccionService {
         return dr.save(direccion);
     }
     public Direccion actualizarDireccion(Integer id, Direccion direccion){
-        Direccion d = buscarPorIdDireccion(id);
+        Direccion d = dr.findById(id).orElse(null);
         if(d != null) {
             d.setIdDireccion(id);
             d.setCalle(direccion.getCalle());
@@ -51,7 +51,8 @@ public class DireccionService {
     public boolean eliminarDireccion(Integer id){
         Direccion d = buscarPorIdDireccion(id);
         if(d != null) {
-            return eliminarDireccion(id);
+            dr.delete(d);
+            return true;
         }
         return false;
     }
@@ -69,7 +70,7 @@ public class DireccionService {
         return regRepo.save(region);
     }
     public Region actualizarRegion(Integer id, Region region){
-        Region r = buscarPorIdRegion(id);
+        Region r = regRepo.findById(id).orElse(null);
         if(r != null) {
             r.setIdRegion(id);
             r.setNombreRegion(region.getNombreRegion());
@@ -80,7 +81,8 @@ public class DireccionService {
     public boolean eliminarRegion(Integer id){
         Region r = buscarPorIdRegion(id);
         if(r != null) {
-            return eliminarRegion(id);
+            regRepo.delete(r);
+            return true;
         }
         return false;
     }
@@ -108,7 +110,8 @@ public class DireccionService {
     public boolean eliminarComuna(Integer id){
         Comuna c = buscarPorIdComuna(id);
         if(c != null) {
-            return eliminarComuna(id);
+            cr.delete(c);
+            return true;
         }
         return false;
     }

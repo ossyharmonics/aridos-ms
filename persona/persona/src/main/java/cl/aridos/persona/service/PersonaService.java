@@ -29,12 +29,13 @@ public class PersonaService {
     public boolean eliminarPersona(String rut){
         Persona p = buscarPorRut(rut);
         if (p!= null) {
-            return eliminarPersona(rut);
+            pr.delete(p);
+            return true;
         }
         return false;
     }
     public Persona actualizarPersona(String rut, Persona persona){
-        Persona p = buscarPorRut(rut);
+        Persona p = pr.findByRut(rut).orElse(null);
         if (p!= null) {
             p.setRut(rut);
             p.setPNombre(persona.getPNombre());

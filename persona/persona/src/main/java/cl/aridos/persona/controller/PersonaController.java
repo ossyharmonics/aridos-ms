@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import cl.aridos.persona.dto.PersonaDTO;
 import cl.aridos.persona.model.Persona;
 import cl.aridos.persona.service.PersonaService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
 @RequestMapping("/aridos/personas")
@@ -25,6 +28,7 @@ public class PersonaController {
     private PersonaService ps;
 
     @GetMapping
+    @Operation(summary = "Listar personas", description = "Lista todas las personas registradas en el sistema")
     public ResponseEntity<?> listarPersonas(){
         List<Persona> personas = ps.listarPersonas();
         if (personas.isEmpty()) {
@@ -33,6 +37,12 @@ public class PersonaController {
         return ResponseEntity.ok(personas);
     }
     @GetMapping("/{rut}")
+    @Operation(summary = "Buscar persona por rut", description = "Busca una persona por su rut")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Persona encontrada exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Persona no encontrada"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<Persona> buscarPorRut(@PathVariable String rut){
         try
         {
@@ -44,6 +54,7 @@ public class PersonaController {
         }
     }
     @PostMapping
+    @Operation(summary = "Crear persona", description = "Crea una nueva persona en el sistema")
     public ResponseEntity<?> guardarPersona(@RequestBody Persona p){
         Persona pNuevo = ps.guardarPersona(p);
         if (pNuevo != null){
@@ -53,6 +64,7 @@ public class PersonaController {
         }
     }
     @PutMapping("/{rut}")
+    @Operation(summary = "Actualizar persona", description = "Actualiza los datos de una persona existente")
     public ResponseEntity<Persona> actualizar(@PathVariable String rut, @RequestBody Persona p){
         try{
             Persona px = ps.actualizarPersona(rut, p);
@@ -62,16 +74,23 @@ public class PersonaController {
         }
     }
     @DeleteMapping("/{rut}")
+    @Operation(summary = "Eliminar persona", description = "Elimina una persona del sistema")
     public ResponseEntity<?> eliminarPersona(@PathVariable String rut){
-        try{
-            ps.eliminarPersona(rut);
+        boolean eliminado = ps.eliminarPersona(rut);
+        if (eliminado) {
             return ResponseEntity.noContent().build();
-        }catch (Exception e){
-            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nLa solicitud no ha podido ser procesada.");
         }
     }
 
     @GetMapping("/dto/{rut}")
+    @Operation(summary = "Buscar persona DTO por rut", description = "Busca los datos DTO de una persona por su rut")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Persona DTO encontrada exitosamente"),
+        @ApiResponse(responseCode = "404", description = "Persona no encontrada"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     public ResponseEntity<PersonaDTO> buscarPersonaDTO(@PathVariable String rut){
         try{
             return ResponseEntity.ok(ps.buscarPersonaDTO(rut));

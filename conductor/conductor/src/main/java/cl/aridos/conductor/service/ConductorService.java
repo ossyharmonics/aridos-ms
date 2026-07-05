@@ -38,7 +38,8 @@ public class ConductorService {
     public boolean eliminarConductor(Integer id) {
         Conductor c = buscarPorIdConductor(id);
         if (c!= null){
-            return eliminarConductor(id);
+            cr.delete(c);
+            return true;
         }
         return false;
     }

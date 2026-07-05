@@ -80,7 +80,8 @@ public class DespachoService {
     public boolean eliminarDespacho(Integer idDespacho) {
         Despacho d = buscarPorIdDespacho(idDespacho);
         if (d != null){
-            return eliminarDespacho(idDespacho);
+            dr.delete(d);
+            return true;
         }
         return false;
     }

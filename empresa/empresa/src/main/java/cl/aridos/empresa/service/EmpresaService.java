@@ -18,6 +18,7 @@ public class EmpresaService {
     
     @Autowired
     private EmpresaRepository er;
+    @Autowired
     private TipoGiroRepository tgr;
 
 
@@ -31,7 +32,7 @@ public class EmpresaService {
         return er.save(empresa);
     }
     public Empresa actualizarEmpresa(String rut, Empresa empresa){
-        Empresa e = buscarPorRut(rut);
+        Empresa e = er.findByRutEmpresa(rut).orElse(null);
         if (e!= null) {
             e.setRutEmpresa(rut);
             e.setNombreEmpresa(empresa.getNombreEmpresa());
@@ -43,7 +44,8 @@ public class EmpresaService {
     public boolean eliminarEmpresa(String rut){
         Empresa e = buscarPorRut(rut);
         if (e!= null) {
-            return eliminarEmpresa(rut);
+            er.delete(e);
+            return true;
         }
         return false;
     }
@@ -63,12 +65,13 @@ public class EmpresaService {
     public boolean eliminarTipoGiro(Integer id){
         TipoGiro tg = buscarPorId(id);
         if (tg!= null) {
-            return eliminarTipoGiro(id);
+            tgr.delete(tg);
+            return true;
         }
         return false;
     }
     public TipoGiro actualizarTipoGiro(Integer idGiro, TipoGiro tipoGiro){
-        TipoGiro tg = buscarPorId(idGiro);
+        TipoGiro tg = tgr.findById(idGiro).orElse(null);
         if (tg!= null) {
             tg.setIdGiro(idGiro);
             tg.setNombreGiro(tipoGiro.getNombreGiro());

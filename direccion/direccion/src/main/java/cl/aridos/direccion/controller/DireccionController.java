@@ -2,6 +2,9 @@ package cl.aridos.direccion.controller;
 
 import java.util.List;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +32,17 @@ public class DireccionController {
 
     //***********************REGIONES***********************
 
+    @Operation(summary = "Listar regiones", description = "Lista todas las regiones")
     @GetMapping("/regiones")
     public List<Region> listarRegiones(){
         return ds.listarRegiones();
     }
+    @Operation(summary = "Buscar región por ID", description = "Busca una región por su identificador único")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Región encontrada"),
+        @ApiResponse(responseCode = "404", description = "Región no encontrada"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/regiones/{id}")
     public ResponseEntity<Region> buscarPorIdRegion(@PathVariable Integer id){
         try{
@@ -42,6 +52,7 @@ public class DireccionController {
             return ResponseEntity.notFound().build();
         }        
     }
+    @Operation(summary = "Crear región", description = "Crea una nueva región")
     @PostMapping("/regiones")
     public ResponseEntity<?> crearRegion(@RequestBody Region region){
         Region r = ds.guardarRegion(region);
@@ -51,6 +62,7 @@ public class DireccionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nError al crear.");
         }
     }
+    @Operation(summary = "Actualizar región", description = "Actualiza una región existente")
     @PutMapping("/regiones/{id}")
     public ResponseEntity<?> actualizarRegion(@PathVariable Integer id, @RequestBody Region region){
         Region r = ds.actualizarRegion(id, region);
@@ -60,6 +72,7 @@ public class DireccionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nLa solicitud no ha podido ser procesada.");
         }
     }
+    @Operation(summary = "Eliminar región", description = "Elimina una región por su ID")
     @DeleteMapping("/regiones/{id}")
     public ResponseEntity<?> eliminarRegion(@PathVariable Integer id){
         boolean r = ds.eliminarRegion(id);
@@ -73,10 +86,17 @@ public class DireccionController {
 
     //***********************COMUNAS***********************
 
+    @Operation(summary = "Listar comunas", description = "Lista todas las comunas")
     @GetMapping("/comunas")
     public List<Comuna> listarComunas(){
         return ds.listarComunas();
     }
+    @Operation(summary = "Buscar comuna por ID", description = "Busca una comuna por su identificador único")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Comuna encontrada"),
+        @ApiResponse(responseCode = "404", description = "Comuna no encontrada"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/comunas/{id}")
     public ResponseEntity<Comuna> buscarPorIdRComuna(@PathVariable Integer id){
         try{
@@ -86,6 +106,7 @@ public class DireccionController {
             return ResponseEntity.notFound().build();
         }        
     }
+    @Operation(summary = "Crear comuna", description = "Crea una nueva comuna")
     @PostMapping("/comunas")
     public ResponseEntity<?> crearComuna(@RequestBody Comuna comuna){
         Comuna c = ds.guardarComuna(comuna);
@@ -95,6 +116,7 @@ public class DireccionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nError al crear.");
         }
     }
+    @Operation(summary = "Actualizar comuna", description = "Actualiza una comuna existente")
     @PutMapping("/comunas/{id}")
     public ResponseEntity<?> actualizarComuna(@PathVariable Integer id,@RequestBody Comuna comuna){
         Comuna c = ds.actualizarComuna(id, comuna);
@@ -104,6 +126,7 @@ public class DireccionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nLa solicitud no ha podido ser procesada.");
         }
     }
+    @Operation(summary = "Eliminar comuna", description = "Elimina una comuna por su ID")
     @DeleteMapping("/comunas/{id}")
     public ResponseEntity<?> eliminarComuna(@PathVariable Integer id){
         boolean c = ds.eliminarComuna(id);
@@ -117,10 +140,17 @@ public class DireccionController {
 
     //***********************DIRECCIONES***********************
 
+    @Operation(summary = "Listar direcciones", description = "Lista todas las direcciones")
     @GetMapping
     public List<Direccion> listarDirecciones(){
         return ds.listarDirecciones();
     }
+    @Operation(summary = "Buscar dirección por ID", description = "Busca una dirección por su identificador único")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Dirección encontrada"),
+        @ApiResponse(responseCode = "404", description = "Dirección no encontrada"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/{id}")
     public ResponseEntity<Direccion> buscarPorIdDireccion(@PathVariable Integer id){
         try{
@@ -130,6 +160,7 @@ public class DireccionController {
             return ResponseEntity.notFound().build();
         }        
     }
+    @Operation(summary = "Crear dirección", description = "Crea una nueva dirección")
     @PostMapping
     public ResponseEntity<?> crearDireccion(@RequestBody Direccion direccion){
         Direccion d = ds.guardarDireccion(direccion);
@@ -139,6 +170,7 @@ public class DireccionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nError al crear.");
         }
     }
+    @Operation(summary = "Actualizar dirección", description = "Actualiza una dirección existente")
     @PutMapping("/{id}")
     public ResponseEntity<?> actualizarDireccion(@PathVariable Integer id,@RequestBody Direccion direccion){
         Direccion d = ds.actualizarDireccion(id, direccion);
@@ -148,8 +180,9 @@ public class DireccionController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR 400 \nLa solicitud no ha podido ser procesada.");
         }
     }
+    @Operation(summary = "Eliminar dirección", description = "Elimina una dirección por su ID")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarDireccion(@PathVariable Integer id, Direccion direccion){
+    public ResponseEntity<?> eliminarDireccion(@PathVariable Integer id){
         boolean d = ds.eliminarDireccion(id);
         if(d){
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("204 \nDireccion eliminada correctamente");
@@ -162,6 +195,12 @@ public class DireccionController {
 
 
 
+    @Operation(summary = "Buscar dirección DTO por ID", description = "Busca una dirección DTO por su identificador único")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Dirección DTO encontrada"),
+        @ApiResponse(responseCode = "404", description = "Dirección DTO no encontrada"),
+        @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
     @GetMapping("/dto/{id}")
     public ResponseEntity<DireccionDTO> buscarDireccionDTO(@PathVariable Integer id){
         try{

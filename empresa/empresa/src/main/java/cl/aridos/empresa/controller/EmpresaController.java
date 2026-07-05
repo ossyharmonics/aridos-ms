@@ -94,7 +94,7 @@ public class EmpresaController {
     public List<TipoGiro> listarTipoGiros(){
         return es.listarTipoGiros();
     }
-    @GetMapping("/{id}")
+    @GetMapping("/giros/{id}")
     public ResponseEntity<TipoGiro> buscarIdTipoGiro(@PathVariable Integer id){
         try{
             TipoGiro tg = es.buscarPorId(id);
